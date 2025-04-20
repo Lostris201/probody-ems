@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>987654321098-abc123def456ghi789jkl0123456789.apps.googleusercontent.com</string>
+	<string>123456789012-fedcba9876543210abcdefghijklmno.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.987654321098-abc123def456ghi789jkl0123456789</string>
+	<string>com.googleusercontent.apps.123456789012-fedcba9876543210abcdefghijklmno</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB_EXAMPLE_KEY_FOR_IOS_APPLICATION</string>
+	<string>AIza1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q</string>
 	<key>GCM_SENDER_ID</key>
-	<string>987654321098</string>
+	<string>123456789012</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:987654321098:ios:abc123def456ghi789jkl</string>
+	<string>1:123456789012:ios:abcdef1234567890</string>
 	<key>DATABASE_URL</key>
 	<string>https://probody-ems-default-rtdb.firebaseio.com</string>
 </dict>
