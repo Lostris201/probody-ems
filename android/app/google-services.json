@@ -14,24 +14,24 @@
       },
       "oauth_client": [
         {
-          "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
+          "client_id": "123456789012-abcdefghijklmnopqrst.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AbCdEfGhIjKlMnOpQrStUvWxYz1234567890"
+          "current_key": "AIzaSyA1bCdEfGhIjKlMnOpQrStUvWxYz123456"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
+              "client_id": "123456789012-abcdefghijklmnopqrst.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
+              "client_id": "123456789012-zyxwvutsrqponmlkjihgfedcba.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.probody.ems"
