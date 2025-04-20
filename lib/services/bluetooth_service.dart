@@ -2,189 +2,175 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// Service that manages Bluetooth connections and communication with EMS devices
-class BluetoothService extends ChangeNotifier {
-  // Bluetooth state
-  BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
-  BluetoothConnectionState _connectionState = BluetoothConnectionState.disconnected;
+class BluetoothService {
+  static const String LAST_DEVICE_KEY = 'last_connected_device';
+  static const String SERVICE_UUID = "FFE0";
+  static const String CHARACTERISTIC_UUID = "FFE1";
   
-  // Connected device properties
   BluetoothDevice? _connectedDevice;
-  BluetoothCharacteristic? _writeCharacteristic;
-  BluetoothCharacteristic? _notifyCharacteristic;
-  StreamSubscription? _stateSubscription;
-  StreamSubscription? _characteristicSubscription;
+  BluetoothCharacteristic? _txCharacteristic;
+  bool _isConnected = false;
   
-  // HM-10 service and characteristic UUIDs
-  final String _serviceUuid = "0000ffe0-0000-1000-8000-00805f9b34fb";
-  final String _characteristicUuid = "0000ffe1-0000-1000-8000-00805f9b34fb";
+  // Commands for the HM-10 based EMS device
+  static const String CMD_START = "START";
+  static const String CMD_STOP = "STOP";
+  static const String CMD_PAUSE = "PAUSE";
+  static const String CMD_RESUME = "RESUME";
+  static const String CMD_CONFIG = "CONFIG";
+  static const String CMD_INTENSITY = "INTENSITY";
   
-  // Device information
-  int _batteryLevel = 0;
-  DateTime? _lastConnectionTime;
+  Stream<List<int>>? _dataStream;
+  StreamSubscription<List<int>>? _dataSubscription;
   
-  // Stream controller for received data
-  final _dataStreamController = StreamController<String>.broadcast();
+  // Get connection status
+  bool get isConnected => _isConnected;
   
-  // Getters
-  BluetoothAdapterState get adapterState => _adapterState;
-  BluetoothConnectionState get connectionState => _connectionState;
+  // Get connected device
   BluetoothDevice? get connectedDevice => _connectedDevice;
-  int get batteryLevel => _batteryLevel;
-  DateTime? get lastConnectionTime => _lastConnectionTime;
-  Stream<String> get dataStream => _dataStreamController.stream;
-  bool get isConnected => _connectionState == BluetoothConnectionState.connected;
   
-  BluetoothService() {
-    // Initialize and subscribe to Bluetooth state changes
-    _init();
-  }
-  
-  void _init() async {
-    // Subscribe to adapter state changes
-    FlutterBluePlus.adapterState.listen((state) {
-      _adapterState = state;
-      notifyListeners();
-    });
-    
-    // Get initial adapter state
-    try {
-      _adapterState = await FlutterBluePlus.adapterState.first;
-      notifyListeners();
-    } catch (e) {
-      print('Error getting adapter state: $e');
-    }
-  }
-  
-  /// Connect to a device by its id (MAC address)
+  // Connect to a specific device
   Future<bool> connectToDevice(BluetoothDevice device) async {
-    // If already connected to a device, disconnect first
-    if (_connectedDevice != null) {
-      await disconnect();
-    }
-    
     try {
-      // Connect to the device
-      await device.connect();
-      _connectedDevice = device;
-      _connectionState = BluetoothConnectionState.connected;
-      _lastConnectionTime = DateTime.now();
-      notifyListeners();
+      // Disconnect from any existing device
+      await disconnect();
       
-      // Set up state change listener
-      _stateSubscription = device.connectionState.listen((state) {
-        _connectionState = state;
-        notifyListeners();
-        
-        // If disconnected unexpectedly, clean up
-        if (state == BluetoothConnectionState.disconnected) {
-          _cleanupConnection();
-        }
-      });
+      // Connect to the new device
+      await device.connect(autoConnect: false, timeout: Duration(seconds: 10));
+      _connectedDevice = device;
       
       // Discover services
-      await _discoverServicesAndCharacteristics();
+      List<BluetoothService> services = await device.discoverServices();
       
-      // Request battery level
-      _requestBatteryLevel();
+      // Find the EMS service and characteristic
+      for (BluetoothService service in services) {
+        if (service.uuid.toString().toUpperCase().contains(SERVICE_UUID)) {
+          for (BluetoothCharacteristic characteristic in service.characteristics) {
+            if (characteristic.uuid.toString().toUpperCase().contains(CHARACTERISTIC_UUID)) {
+              _txCharacteristic = characteristic;
+              
+              // Save the device ID for future connections
+              await _saveLastConnectedDevice(device.id.id);
+              
+              // Setup data stream for receiving data from device
+              await _setupDataStream(characteristic);
+              
+              _isConnected = true;
+              return true;
+            }
+          }
+        }
+      }
       
-      return true;
+      // If we got here, we couldn't find the right service/characteristic
+      await device.disconnect();
+      _connectedDevice = null;
+      return false;
     } catch (e) {
       print('Error connecting to device: $e');
-      await device.disconnect();
-      _cleanupConnection();
       return false;
     }
   }
   
-  /// Disconnect from the current device
-  Future<void> disconnect() async {
-    if (_connectedDevice != null) {
-      try {
-        await _connectedDevice!.disconnect();
-      } catch (e) {
-        print('Error disconnecting: $e');
+  // Connect to the last used device
+  Future<bool> connectToLastDevice() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? lastDeviceId = prefs.getString(LAST_DEVICE_KEY);
+      
+      if (lastDeviceId == null) {
+        return false;
       }
-      _cleanupConnection();
+      
+      // Get a list of known devices
+      List<BluetoothDevice> devices = await FlutterBluePlus.bondedDevices;
+      
+      // Find the device with the matching ID
+      for (BluetoothDevice device in devices) {
+        if (device.id.id == lastDeviceId) {
+          return await connectToDevice(device);
+        }
+      }
+      
+      return false;
+    } catch (e) {
+      print('Error connecting to last device: $e');
+      return false;
     }
   }
   
-  /// Clean up connection resources
-  void _cleanupConnection() {
-    _stateSubscription?.cancel();
-    _stateSubscription = null;
-    
-    _characteristicSubscription?.cancel();
-    _characteristicSubscription = null;
-    
-    _writeCharacteristic = null;
-    _notifyCharacteristic = null;
-    _connectionState = BluetoothConnectionState.disconnected;
-    _connectedDevice = null;
-    
-    notifyListeners();
-  }
-  
-  /// Discover services and set up characteristics
-  Future<void> _discoverServicesAndCharacteristics() async {
-    if (_connectedDevice == null) return;
-    
+  // Disconnect from the current device
+  Future<void> disconnect() async {
     try {
-      // Discover services
-      List<BluetoothService> services = await _connectedDevice!.discoverServices();
+      // Cancel data stream subscription
+      await _dataSubscription?.cancel();
+      _dataSubscription = null;
       
-      // Find the HM-10 service
-      BluetoothService? targetService;
-      for (var service in services) {
-        if (service.uuid.toString().toLowerCase() == _serviceUuid) {
-          targetService = service;
-          break;
-        }
-      }
-      
-      if (targetService == null) {
-        print('HM-10 service not found');
-        return;
-      }
-      
-      // Find the characteristic for reading/writing
-      for (var characteristic in targetService.characteristics) {
-        if (characteristic.uuid.toString().toLowerCase() == _characteristicUuid) {
-          // Set the characteristics for writing and notifications
-          _writeCharacteristic = characteristic;
-          _notifyCharacteristic = characteristic;
-          
-          // Subscribe to notifications if supported
-          if (characteristic.properties.notify) {
-            await characteristic.setNotifyValue(true);
-            _characteristicSubscription = characteristic.lastValueStream.listen((value) {
-              _handleIncomingData(value);
-            });
-          }
-          
-          break;
-        }
+      if (_connectedDevice != null) {
+        await _connectedDevice!.disconnect();
       }
     } catch (e) {
-      print('Error discovering services: $e');
+      print('Error disconnecting: $e');
+    } finally {
+      _connectedDevice = null;
+      _txCharacteristic = null;
+      _isConnected = false;
     }
   }
   
-  /// Send data to the connected device
-  Future<bool> sendData(String data) async {
-    if (_writeCharacteristic == null || !isConnected) {
+  // Save the last connected device ID
+  Future<void> _saveLastConnectedDevice(String deviceId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(LAST_DEVICE_KEY, deviceId);
+  }
+  
+  // Setup the data stream for receiving data from the device
+  Future<void> _setupDataStream(BluetoothCharacteristic characteristic) async {
+    try {
+      // Enable notifications if possible
+      if (characteristic.properties.notify) {
+        await characteristic.setNotifyValue(true);
+        _dataStream = characteristic.value;
+        
+        // Listen for data from the device
+        _dataSubscription = _dataStream?.listen((data) {
+          // Handle incoming data
+          _processIncomingData(data);
+        });
+      }
+    } catch (e) {
+      print('Error setting up data stream: $e');
+    }
+  }
+  
+  // Process incoming data from the device
+  void _processIncomingData(List<int> data) {
+    // Convert the data bytes to a string
+    String message = utf8.decode(data);
+    
+    // Process the message based on its content
+    if (message.startsWith("STATUS:")) {
+      // Handle status updates
+      print('Device status: $message');
+    } else if (message.startsWith("ERROR:")) {
+      // Handle error messages
+      print('Device error: $message');
+    } else {
+      // Handle other messages
+      print('Device message: $message');
+    }
+  }
+  
+  // Send raw data to the device
+  Future<bool> _sendData(List<int> data) async {
+    if (!_isConnected || _txCharacteristic == null) {
       return false;
     }
     
     try {
-      // Convert string to bytes
-      List<int> bytes = utf8.encode(data + '\n'); // Add newline for HM-10
-      
-      // Write to the characteristic
-      await _writeCharacteristic!.write(bytes);
+      await _txCharacteristic!.write(data, withoutResponse: false);
       return true;
     } catch (e) {
       print('Error sending data: $e');
@@ -192,62 +178,66 @@ class BluetoothService extends ChangeNotifier {
     }
   }
   
-  /// Handle incoming data from the device
-  void _handleIncomingData(List<int> data) {
-    if (data.isEmpty) return;
+  // Send a command string to the device
+  Future<bool> _sendCommand(String command) async {
+    return await _sendData(utf8.encode('$command\r\n'));
+  }
+  
+  // Configure the device with program settings
+  Future<bool> sendProgramConfiguration(
+    List<String> zones,
+    int maxIntensity,
+    int frequency,
+    int pulseWidth,
+  ) async {
+    // Format: CONFIG:ZONES=zone1,zone2;FREQ=freq;PW=pw;MAX=max
+    String zonesStr = zones.join(',');
+    String command = '$CMD_CONFIG:ZONES=$zonesStr;FREQ=$frequency;PW=$pulseWidth;MAX=$maxIntensity';
+    return await _sendCommand(command);
+  }
+  
+  // Start the training program
+  Future<bool> startTraining() async {
+    return await _sendCommand(CMD_START);
+  }
+  
+  // Pause the training program
+  Future<bool> pauseTraining() async {
+    return await _sendCommand(CMD_PAUSE);
+  }
+  
+  // Resume the paused training program
+  Future<bool> resumeTraining() async {
+    return await _sendCommand(CMD_RESUME);
+  }
+  
+  // Stop the training program
+  Future<bool> stopTraining() async {
+    return await _sendCommand(CMD_STOP);
+  }
+  
+  // Update the intensity levels for each zone
+  Future<bool> updateIntensities(Map<String, double> zoneIntensities) async {
+    // Convert intensity values (0.0 to 1.0) to device values (0 to 100)
+    Map<String, int> deviceIntensities = {};
     
-    // Convert bytes to string
-    String message = utf8.decode(data);
+    zoneIntensities.forEach((zone, intensity) {
+      // Convert to integer percentage (0-100)
+      deviceIntensities[zone] = (intensity * 100).round();
+    });
     
-    // Parse battery level if it's a battery response
-    if (message.startsWith('BATTERY:')) {
-      _parseBatteryLevel(message);
-    }
+    // Format: INTENSITY:zone1=level1;zone2=level2;...
+    List<String> intensityParts = [];
+    deviceIntensities.forEach((zone, level) {
+      intensityParts.add('$zone=$level');
+    });
     
-    // Broadcast the message to listeners
-    _dataStreamController.add(message);
+    String command = '$CMD_INTENSITY:${intensityParts.join(';')}';
+    return await _sendCommand(command);
   }
   
-  /// Parse battery level from a message
-  void _parseBatteryLevel(String message) {
-    try {
-      // Format: BATTERY:XX where XX is the percentage
-      String levelStr = message.split(':')[1].trim();
-      _batteryLevel = int.parse(levelStr);
-      notifyListeners();
-    } catch (e) {
-      print('Error parsing battery level: $e');
-    }
-  }
-  
-  /// Request battery level from the device
-  Future<void> _requestBatteryLevel() async {
-    await sendData('GET_BATTERY');
-  }
-  
-  /// Starts scanning for devices
-  Stream<List<ScanResult>> startScan({
-    Duration timeout = const Duration(seconds: 10),
-  }) {
-    FlutterBluePlus.startScan(
-      timeout: timeout,
-      androidScanMode: AndroidScanMode.lowLatency,
-    );
-    
-    return FlutterBluePlus.scanResults;
-  }
-  
-  /// Stops scanning for devices
-  Future<void> stopScan() async {
-    await FlutterBluePlus.stopScan();
-  }
-  
-  @override
-  void dispose() {
-    _stateSubscription?.cancel();
-    _characteristicSubscription?.cancel();
-    _dataStreamController.close();
-    disconnect();
-    super.dispose();
+  // Send a raw custom command to the device
+  Future<bool> sendCustomCommand(String command) async {
+    return await _sendCommand(command);
   }
 }
