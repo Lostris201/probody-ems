@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>123456789012-zyxwvutsrqponmlkjihgfedcba654321.apps.googleusercontent.com</string>
+	<string>123456789012-fedcbazyxwvutsrqponmlkjihg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.123456789012-zyxwvutsrqponmlkjihgfedcba654321</string>
+	<string>com.googleusercontent.apps.123456789012-fedcbazyxwvutsrqponmlkjihg</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q</string>
+	<string>AIzaSyDfg1234567890abcdefghijklmnopqrst</string>
 	<key>GCM_SENDER_ID</key>
 	<string>123456789012</string>
 	<key>PLIST_VERSION</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:123456789012:ios:1a2b3c4d5e6f7890123456</string>
-	<key>DATABASE_URL</key>
-	<string>https://probody-ems.firebaseio.com</string>
+	<string>1:123456789012:ios:abcdef1234567890</string>
 </dict>
 </plist>
