@@ -1,0 +1,181 @@
+{
+  "@@locale": "tr",
+  "appTitle": "ProBody EMS",
+  
+  "welcomeMessage": "Hoş Geldiniz",
+  "welcomeBack": "Tekrar Hoş Geldiniz, {name}",
+  "@welcomeBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  
+  "login": "Giriş Yap",
+  "signup": "Kayıt Ol",
+  "email": "E-posta",
+  "password": "Şifre",
+  "confirmPassword": "Şifreyi Doğrula",
+  "fullName": "Tam İsim",
+  "displayName": "Görünen İsim",
+  "forgotPassword": "Şifremi Unuttum",
+  "resetPassword": "Şifreyi Sıfırla",
+  "logout": "Çıkış Yap",
+  
+  "home": "Ana Sayfa",
+  "programs": "Programlar",
+  "favorites": "Favoriler",
+  "settings": "Ayarlar",
+  "profile": "Profil",
+  "help": "Yardım",
+  "about": "Hakkında",
+  
+  "myAccount": "Hesabım",
+  "editProfile": "Profili Düzenle",
+  "changePassword": "Şifreyi Değiştir",
+  "notifications": "Bildirimler",
+  "language": "Dil",
+  "theme": "Tema",
+  "darkMode": "Karanlık Mod",
+  "lightMode": "Aydınlık Mod",
+  "systemDefault": "Sistem Varsayılanı",
+  
+  "devices": "Cihazlar",
+  "myDevices": "Cihazlarım",
+  "connectDevice": "Cihaz Bağla",
+  "scanForDevices": "Cihazları Tara",
+  "deviceConnected": "Cihaz Bağlandı",
+  "deviceDisconnected": "Cihaz Bağlantısı Kesildi",
+  "deviceName": "Cihaz Adı",
+  "renameDevice": "Cihazı Yeniden Adlandır",
+  "unlinkDevice": "Cihazı Kaldır",
+  "batteryLevel": "Pil Seviyesi: {level}%",
+  "@batteryLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "lastConnected": "Son Bağlantı: {time}",
+  "@lastConnected": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  
+  "training": "Antrenman",
+  "startTraining": "Antrenmanı Başlat",
+  "pauseTraining": "Antrenmanı Duraklat",
+  "resumeTraining": "Antrenmanı Sürdür",
+  "stopTraining": "Antrenmanı Durdur",
+  "trainingHistory": "Antrenman Geçmişi",
+  "recentTrainings": "Son Antrenmanlar",
+  "trainingTime": "Antrenman Süresi",
+  "trainingDate": "Antrenman Tarihi",
+  "trainingDuration": "Süre: {duration}",
+  "@trainingDuration": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  
+  "program": "Program",
+  "programDetails": "Program Detayları",
+  "programDuration": "Süre",
+  "programIntensity": "Yoğunluk",
+  "programType": "Tür",
+  "programZones": "Bölgeler",
+  "programDescription": "Açıklama",
+  "targetMuscles": "Hedef Kaslar",
+  "allPrograms": "Tüm Programlar",
+  "searchPrograms": "Program Ara",
+  "noPrograms": "Program Bulunamadı",
+  "addToFavorites": "Favorilere Ekle",
+  "removeFromFavorites": "Favorilerden Çıkar",
+  "noFavoritePrograms": "Favori program bulunamadı",
+  
+  "zones": "Bölgeler",
+  "zoneChest": "Göğüs",
+  "zoneAbs": "Karın",
+  "zoneShoulders": "Omuzlar",
+  "zoneBiceps": "Biseps",
+  "zoneTriceps": "Triseps",
+  "zoneBack": "Sırt",
+  "zoneQuads": "Kuadriseps",
+  "zoneCalves": "Baldırlar",
+  "zoneGlutes": "Kalça",
+  
+  "intensity": "Yoğunluk",
+  "intensityLow": "Düşük",
+  "intensityMedium": "Orta",
+  "intensityHigh": "Yüksek",
+  "intensityLevel": "Seviye {level}",
+  "@intensityLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  
+  "duration": "Süre",
+  "minutes": "{count} dakika",
+  "@minutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "seconds": "{count} saniye",
+  "@seconds": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  
+  "aiHelp": "AI Yardımcı",
+  "askQuestion": "Bir soru sorun...",
+  "aiChatDescription": "Antrenmanlar ve EMS cihazınız hakkında sorular sorun",
+  "suggestedQuestions": "Önerilen Sorular",
+  "seeMore": "Daha Fazla",
+  
+  "cancel": "İptal",
+  "save": "Kaydet",
+  "delete": "Sil",
+  "edit": "Düzenle",
+  "confirm": "Onayla",
+  "apply": "Uygula",
+  "done": "Tamam",
+  "next": "İleri",
+  "back": "Geri",
+  "search": "Ara",
+  "filter": "Filtrele",
+  "sort": "Sırala",
+  
+  "errorOccurred": "Bir hata oluştu",
+  "tryAgain": "Tekrar Dene",
+  "invalidEmail": "Geçersiz e-posta adresi",
+  "invalidPassword": "Geçersiz şifre",
+  "passwordsDoNotMatch": "Şifreler eşleşmiyor",
+  "fieldRequired": "Bu alan gerekli",
+  "connectionError": "Bağlantı hatası",
+  "deviceNotFound": "Cihaz bulunamadı",
+  "permissionDenied": "İzin reddedildi",
+  "bluetoothDisabled": "Bluetooth devre dışı",
+  "locationDisabled": "Konum hizmeti devre dışı",
+  "enableBluetooth": "Lütfen Bluetooth'u açın",
+  "enableLocation": "Lütfen konum hizmetlerini açın",
+  
+  "confirmLogout": "Çıkış yapmak istediğinizden emin misiniz?",
+  "confirmUnlinkDevice": "Bu cihazı kaldırmak istediğinizden emin misiniz?",
+  "confirmStopTraining": "Antrenmanı durdurmak istediğinizden emin misiniz?"
+}
