@@ -32,7 +32,7 @@
               "client_type": 3
             },
             {
-              "client_id": "123456789012-fedcba9876543210abcdefghijklmno.apps.googleusercontent.com",
+              "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz654321.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.probody.ems"
