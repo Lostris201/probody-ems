@@ -1,6 +1,6 @@
 {
   "project_info": {
-    "project_number": "123456789012",
+    "project_number": "124578963214",
     "firebase_url": "https://probody-ems-default-rtdb.firebaseio.com",
     "project_id": "probody-ems",
     "storage_bucket": "probody-ems.appspot.com"
@@ -8,31 +8,31 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789012:android:abcdef1234567890",
+        "mobilesdk_app_id": "1:124578963214:android:a7b8c9d0e1f2g3h4i5j6k7",
         "android_client_info": {
           "package_name": "com.probody.ems"
         }
       },
       "oauth_client": [
         {
-          "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com",
+          "client_id": "124578963214-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q"
+          "current_key": "AIzaSyA-BCDEFGhIjKlMnOpQrStUvWxYz123456"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com",
+              "client_id": "124578963214-abcdefghijklmnopqrstuvwxyz654321.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "123456789012-zyxwvutsrqponmlkjihgfedcba.apps.googleusercontent.com",
+              "client_id": "124578963214-lmnopqrstuvwxyzabcdefghijk12345.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.probody.ems"
