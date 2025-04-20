@@ -1,149 +1,131 @@
 {
-  "appName": "ProBody EMS",
-  
   "@@locale": "en",
+  "appTitle": "ProBody EMS",
   
-  "welcomeBack": "Welcome back",
-  "welcome": "Welcome to ProBody EMS",
-  "welcomeMessage": "Your personal EMS training assistant",
+  "welcomeMessage": "Welcome",
+  "welcomeBack": "Welcome back, {name}",
+  "@welcomeBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   
+  "login": "Login",
+  "signup": "Sign Up",
   "email": "Email",
   "password": "Password",
   "confirmPassword": "Confirm Password",
-  "signIn": "Sign In",
-  "signUp": "Sign Up",
-  "signOut": "Sign Out",
-  "forgotPassword": "Forgot Password?",
+  "fullName": "Full Name",
+  "displayName": "Display Name",
+  "forgotPassword": "Forgot Password",
   "resetPassword": "Reset Password",
-  "dontHaveAccount": "Don't have an account?",
-  "alreadyHaveAccount": "Already have an account?",
-  "createAccount": "Create Account",
-  "createNewAccount": "Create a new account",
-  "enterYourDetails": "Please enter your details",
+  "logout": "Logout",
   
   "home": "Home",
   "programs": "Programs",
-  "devices": "Devices",
-  "profile": "Profile",
+  "favorites": "Favorites",
   "settings": "Settings",
+  "profile": "Profile",
+  "help": "Help",
+  "about": "About",
   
-  "recentPrograms": "Recent Programs",
-  "favoritePrograms": "Favorite Programs",
-  "allPrograms": "All Programs",
-  "noPrograms": "No programs found",
-  "searchPrograms": "Search programs",
-  "programDetails": "Program Details",
-  "startProgram": "Start Program",
-  "intensity": "Intensity",
-  "duration": "Duration",
-  "targetMuscles": "Target Muscles",
-  "frequency": "Frequency",
-  "addToFavorites": "Add to Favorites",
-  "removeFromFavorites": "Remove from Favorites",
+  "myAccount": "My Account",
+  "editProfile": "Edit Profile",
+  "changePassword": "Change Password",
+  "notifications": "Notifications",
+  "language": "Language",
+  "theme": "Theme",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "systemDefault": "System Default",
   
-  "deviceManagement": "Device Management",
-  "pairedDevices": "Paired Devices",
-  "availableDevices": "Available Devices",
+  "devices": "Devices",
+  "myDevices": "My Devices",
+  "connectDevice": "Connect Device",
   "scanForDevices": "Scan for Devices",
-  "scanning": "Scanning...",
-  "connectToDevice": "Connect",
-  "disconnectDevice": "Disconnect",
-  "connecting": "Connecting...",
-  "connected": "Connected",
-  "disconnected": "Disconnected",
+  "deviceConnected": "Device Connected",
+  "deviceDisconnected": "Device Disconnected",
   "deviceName": "Device Name",
-  "macAddress": "MAC Address",
-  "batteryLevel": "Battery Level",
   "renameDevice": "Rename Device",
   "unlinkDevice": "Unlink Device",
-  "noDevicesFound": "No devices found",
-  "noDevicesPaired": "No devices paired",
-  "lastConnected": "Last connected",
-  "connectionFailed": "Connection failed",
+  "batteryLevel": "Battery Level: {level}%",
+  "@batteryLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "lastConnected": "Last Connected: {time}",
+  "@lastConnected": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   
   "training": "Training",
-  "trainingHistory": "Training History",
-  "trainingSession": "Training Session",
   "startTraining": "Start Training",
-  "pauseTraining": "Pause",
-  "resumeTraining": "Resume",
-  "stopTraining": "Stop",
-  "session": "Session",
-  "completed": "Completed",
-  "incomplete": "Incomplete",
-  "timeElapsed": "Time Elapsed",
-  "timeRemaining": "Time Remaining",
-  "date": "Date",
-  "time": "Time",
-  "noTrainingHistory": "No training history",
+  "pauseTraining": "Pause Training",
+  "resumeTraining": "Resume Training",
+  "stopTraining": "Stop Training",
+  "trainingHistory": "Training History",
+  "recentTrainings": "Recent Trainings",
+  "trainingTime": "Training Time",
+  "trainingDate": "Training Date",
+  "trainingDuration": "Duration: {duration}",
+  "@trainingDuration": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
   
-  "aiTrainer": "AI Trainer",
-  "askQuestion": "Ask a question",
-  "sendMessage": "Send",
-  "typing": "Typing...",
-  "aiChatIntro": "Hello! I'm your ProBody AI trainer. How can I help you today?",
-  "suggestedQuestions": "Suggested Questions",
-  "ems_benefits": "What are the benefits of EMS training?",
-  "ems_frequency": "How often should I use EMS training?",
-  "ems_muscles": "Which muscles can I target with EMS?",
-  "ems_safety": "Is EMS training safe?",
-  "ems_prepare": "How do I prepare for an EMS session?",
-  "ems_recovery": "How long should I recover between sessions?",
-  "ems_results": "When will I see results from EMS training?",
+  "program": "Program",
+  "programDetails": "Program Details",
+  "programDuration": "Duration",
+  "programIntensity": "Intensity",
+  "programType": "Type",
+  "programZones": "Zones",
+  "programDescription": "Description",
+  "targetMuscles": "Target Muscles",
+  "allPrograms": "All Programs",
+  "searchPrograms": "Search Programs",
+  "noPrograms": "No Programs Found",
+  "addToFavorites": "Add to Favorites",
+  "removeFromFavorites": "Remove from Favorites",
+  "noFavoritePrograms": "No favorite programs found",
   
-  "accountSettings": "Account Settings",
-  "personalInfo": "Personal Information",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "phoneNumber": "Phone Number",
-  "birthDate": "Birth Date",
-  "gender": "Gender",
-  "male": "Male",
-  "female": "Female",
-  "other": "Other",
-  "preferNotToSay": "Prefer not to say",
-  "updateProfile": "Update Profile",
-  "changePassword": "Change Password",
-  "currentPassword": "Current Password",
-  "newPassword": "New Password",
-  "confirmNewPassword": "Confirm New Password",
-  "save": "Save",
-  "cancel": "Cancel",
-  "delete": "Delete",
-  "deleteAccount": "Delete Account",
-  "deleteAccountConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+  "zones": "Zones",
+  "zoneChest": "Chest",
+  "zoneAbs": "Abs",
+  "zoneShoulders": "Shoulders",
+  "zoneBiceps": "Biceps",
+  "zoneTriceps": "Triceps",
+  "zoneBack": "Back",
+  "zoneQuads": "Quads",
+  "zoneCalves": "Calves",
+  "zoneGlutes": "Glutes",
   
-  "preferences": "Preferences",
-  "notifications": "Notifications",
-  "darkMode": "Dark Mode",
-  "language": "Language",
-  "english": "English",
-  "turkish": "Turkish",
-  "german": "German",
+  "intensity": "Intensity",
+  "intensityLow": "Low",
+  "intensityMedium": "Medium",
+  "intensityHigh": "High",
+  "intensityLevel": "Level {level}",
+  "@intensityLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   
-  "permissions": "Permissions",
-  "locationPermission": "Location Permission",
-  "locationPermissionExplanation": "Location permission is required to scan for nearby Bluetooth devices",
-  "bluetoothPermission": "Bluetooth Permission",
-  "bluetoothPermissionExplanation": "Bluetooth permission is required to connect to your EMS device",
-  
-  "error": "Error",
-  "success": "Success",
-  "warning": "Warning",
-  "info": "Information",
-  "loading": "Loading...",
-  "retry": "Retry",
-  "ok": "OK",
-  "yes": "Yes",
-  "no": "No",
-  "confirm": "Confirm",
-  
-  "errorOccurred": "An error occurred",
-  "pleaseTryAgain": "Please try again",
-  "noInternetConnection": "No internet connection",
-  "checkConnection": "Please check your connection and try again",
-  
-  "minutes": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "duration": "Duration",
+  "minutes": "{count} minutes",
   "@minutes": {
     "placeholders": {
       "count": {
@@ -151,8 +133,7 @@
       }
     }
   },
-  
-  "seconds": "{count, plural, =1{1 second} other{{count} seconds}}",
+  "seconds": "{count} seconds",
   "@seconds": {
     "placeholders": {
       "count": {
@@ -161,44 +142,40 @@
     }
   },
   
-  "daysAgo": "{count, plural, =0{Today} =1{Yesterday} other{{count} days ago}}",
-  "@daysAgo": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "aiHelp": "AI Help",
+  "askQuestion": "Ask a question...",
+  "aiChatDescription": "Ask questions about your workouts and EMS device",
+  "suggestedQuestions": "Suggested Questions",
+  "seeMore": "See More",
   
-  "hoursAgo": "{count, plural, =1{1 hour ago} other{{count} hours ago}}",
-  "@hoursAgo": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "confirm": "Confirm",
+  "apply": "Apply",
+  "done": "Done",
+  "next": "Next",
+  "back": "Back",
+  "search": "Search",
+  "filter": "Filter",
+  "sort": "Sort",
   
-  "minutesAgo": "{count, plural, =1{1 minute ago} other{{count} minutes ago}}",
-  "@minutesAgo": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "errorOccurred": "An error occurred",
+  "tryAgain": "Try Again",
+  "invalidEmail": "Invalid email address",
+  "invalidPassword": "Invalid password",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "fieldRequired": "This field is required",
+  "connectionError": "Connection error",
+  "deviceNotFound": "Device not found",
+  "permissionDenied": "Permission denied",
+  "bluetoothDisabled": "Bluetooth is disabled",
+  "locationDisabled": "Location service is disabled",
+  "enableBluetooth": "Please enable Bluetooth",
+  "enableLocation": "Please enable location services",
   
-  "justNow": "Just now",
-  
-  "muscleZones": {
-    "abs": "Abdominals",
-    "chest": "Chest",
-    "back": "Back",
-    "shoulders": "Shoulders",
-    "biceps": "Biceps",
-    "triceps": "Triceps",
-    "upperLegs": "Upper Legs",
-    "lowerLegs": "Lower Legs",
-    "glutes": "Glutes"
-  }
+  "confirmLogout": "Are you sure you want to log out?",
+  "confirmUnlinkDevice": "Are you sure you want to unlink this device?",
+  "confirmStopTraining": "Are you sure you want to stop training?"
 }
