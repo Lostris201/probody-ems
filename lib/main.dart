@@ -1,37 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:probody_ems/presentation/app.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:probody_ems/core/localization/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:probody_ems/data/repositories/user_repository.dart';
-import 'package:probody_ems/data/repositories/program_repository.dart';
-import 'package:probody_ems/data/repositories/device_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:get/get.dart';
+import 'app/routes.dart';
+import 'app/themes/app_theme.dart';
+import 'core/config/firebase_config.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'core/config/firebase_config.dart';
+ 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Firebase
-  await Firebase.initializeApp();
-  
-  // Initialize repositories
-  final userRepository = UserRepository();
-  final programRepository = ProgramRepository();
-  final deviceRepository = DeviceRepository();
-  
-  // Initialize shared preferences
-  final sharedPreferences = await SharedPreferences.getInstance();
-  
-  runApp(
-    MultiProvider(
-      providers: [
-        Provider<UserRepository>.value(value: userRepository),
-        Provider<ProgramRepository>.value(value: programRepository),
-        Provider<DeviceRepository>.value(value: deviceRepository),
-        Provider<SharedPreferences>.value(value: sharedPreferences),
-      ],
-      child: const ProbodyEmsApp(),
-    ),
-  );
+  // Force portrait mode
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  await FirebaseConfig.initializeFirebase();
+  runApp(const MyApp());
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'ProBody Systems',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: false,
+      defaultTransition: Transition.cupertino,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('tr'), // Turkish
+        Locale('de'), // German
+      ],
+      initialRoute: AppRoutes.splash,
+      getPages: AppRoutes.pages,
+    );
+  }
+} 
